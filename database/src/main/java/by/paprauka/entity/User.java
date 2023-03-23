@@ -23,6 +23,7 @@ public class User {
     }
 
     public Boolean isMale() {
+        System.out.println(isMale);
         return isMale;
     }
 
