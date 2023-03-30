@@ -1,6 +1,6 @@
-package by.paprauka.dao;
+package by.paprauka.database.dao;
 
-import by.paprauka.entity.User;
+import by.paprauka.database.entity.User;
 
 public final class UserDao {
 
@@ -10,7 +10,10 @@ public final class UserDao {
     }
 
     public User getDummy() {
-        return new User("Bob", "Smith");
+        return User.builder()
+                .name("Bob")
+                .surname("Smith")
+                .build();
     }
 
     public static UserDao getInstance() {
