@@ -1,9 +1,9 @@
 package by.paprauka.service;
 
-import by.paprauka.dao.UserDao;
-import by.paprauka.entity.User;
+import by.paprauka.database.dao.UserDao;
+import by.paprauka.database.entity.User;
 
-public class UserService {
+public final class UserService {
 
     private static final UserService INSTANCE = new UserService();
     private final UserDao userDao = UserDao.getInstance();
@@ -13,7 +13,7 @@ public class UserService {
 
     public String getUser() {
         User dummyUser = userDao.getDummy();
-        if (dummyUser.isMale()) {
+        if (true) {
             return "Hello Mr. ".concat(dummyUser.getName());
         } else {
             return "Hello Mrs. ".concat(dummyUser.getName());
