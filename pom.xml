@@ -11,12 +11,6 @@
 
     <profiles>
         <profile>
-            <id>prod</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-        </profile>
-        <profile>
             <id>dev</id>
             <build>
                 <plugins>
