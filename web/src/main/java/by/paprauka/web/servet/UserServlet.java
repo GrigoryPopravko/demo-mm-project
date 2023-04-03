@@ -27,4 +27,9 @@ public class UserServlet extends HttpServlet {
             writer.write(user);
         }
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
 }
