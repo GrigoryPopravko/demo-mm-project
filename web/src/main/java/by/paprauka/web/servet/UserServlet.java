@@ -15,21 +15,4 @@ public class UserServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String user = userService.getUser();
-        try (var writer = resp.getWriter()) {
-            writer.write(user);
-        }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }
