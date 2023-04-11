@@ -22,7 +22,7 @@ public class BookServlet extends HttpServlet {
             req.setAttribute("books", bookService.getAll());
             req.getRequestDispatcher(PagesUtil.BOOKS).forward(req, resp);
         } else {
-            req.setAttribute("book", bookService.getById(Long.getLong(id)));
+            req.setAttribute("book", bookService.getById(Long.parseLong(id)));
             req.getRequestDispatcher(PagesUtil.BOOK).forward(req, resp);
         }
     }

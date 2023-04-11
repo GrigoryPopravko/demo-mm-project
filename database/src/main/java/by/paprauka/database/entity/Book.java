@@ -1,10 +1,9 @@
 package by.paprauka.database.entity;
 
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class Book {
 
@@ -13,4 +12,5 @@ public class Book {
     private String author;
     private Integer pages;
     private Double price;
+    private String description;
 }
