@@ -1,14 +1,14 @@
 package by.paprauka.database.entity;
 
-import lombok.AllArgsConstructor;
+import by.paprauka.database.entity.enam.Gender;
+import by.paprauka.database.entity.enam.Role;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class User {
 
     private Long id;
@@ -16,6 +16,7 @@ public class User {
     private String surname;
     private String email;
     private String password;
-    private String gender;
+    private Gender gender;
+    private Role role;
     private Contact contact;
 }

@@ -14,10 +14,9 @@
 <body>
 <%@ include file="header.jsp" %>
 
-<h2>${book.title} автор: ${book.author}</h2>
+<h2>${book.title}</h2>
 <h3>Кол-во страниц: ${book.pages}</h3>
-<h4>Цена: ${book.price}</h4>
-<p>${book.description}</p>
+<h4>Жанр: ${book.genre}</h4>
 
 <%@ include file="footer.jsp" %>
 </body>

@@ -17,9 +17,9 @@
 <h1>${sessionScope.user.name} хотим тебе предложить</h1>
 
 <c:forEach var="book" items="${requestScope.books}">
-    <h2>${book.title} автор: ${book.author}</h2>
+    <h2>${book.title}</h2>
     <h3>Кол-во страниц: ${book.pages}</h3>
-    <h4>Цена: ${book.price}</h4>
+    <h4>Жанр: ${book.genre}</h4>
     <h5><a href=${pageContext.request.contextPath}/books?id=${book.id}>Подробнее</a></h5>
 </c:forEach>
 

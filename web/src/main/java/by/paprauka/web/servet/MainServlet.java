@@ -1,6 +1,5 @@
 package by.paprauka.web.servet;
 
-import by.paprauka.web.util.PagesUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

@@ -29,7 +29,6 @@ public class RegistrationServlet extends HttpServlet {
                         .password(req.getParameter("password"))
                         .name(req.getParameter("name"))
                         .surname(req.getParameter("surname"))
-                        .gender(req.getParameter("gender"))
                         .build());
         resp.sendRedirect("/login");
     }

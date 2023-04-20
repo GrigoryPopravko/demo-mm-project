@@ -15,14 +15,13 @@ public class BookService {
     private final BookDao bookDao = BookDao.getInstance();
 
     public List<Book> getAll() {
-        return bookDao.getAll();
+        return bookDao.findAll();
     }
 
     public Book getById(Long id) {
-        return bookDao.getById(id)
+        return bookDao.findById(id)
                 .orElse(Book.builder()
                         .title("Lukomorie")
-                        .author("Pushkin")
                         .build());
     }
 

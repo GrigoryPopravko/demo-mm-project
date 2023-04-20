@@ -1,6 +1,5 @@
 package by.paprauka.database.dao;
 
-import by.paprauka.database.DummyDatabase;
 import by.paprauka.database.entity.User;
 import lombok.NoArgsConstructor;
 
@@ -15,32 +14,25 @@ public final class UserDao {
 
     private static final UserDao INSTANCE = new UserDao();
 
-    private final DummyDatabase db = DummyDatabase.getInstance();
 
     public Optional<User> getByEmailAndPass(String email, String password) {
-        return db.getUsers().values().stream()
-                .filter(user -> user.getEmail().equals(email))
-                .filter(user -> user.getPassword().equals(password))
-                .findAny();
+        return Optional.of(null);
     }
 
     public List<User> getAll() {
-        return new ArrayList<>(db.getUsers().values());
+        return new ArrayList<>();
     }
 
     public Optional<User> getById(Long id) {
-        return Optional.ofNullable(db.getUsers().get(id));
+        return Optional.ofNullable(null);
     }
 
     public User create(User user) {
-        // terrible practise
-        Long dummyID = db.getUsers().keySet().size() + 1L;
-        user.setId(dummyID);
-        return db.getUsers().put(dummyID, user);
+        return User.builder().build();
     }
 
     public User delete(Long id) {
-        return Optional.ofNullable(db.getUsers().remove(id))
+        return Optional.ofNullable(User.builder().build())
                 .orElseThrow(RuntimeException::new);
     }
 

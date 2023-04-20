@@ -1,16 +1,22 @@
 package by.paprauka.database.entity;
 
+import by.paprauka.database.entity.enam.Genre;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
 @Builder
+@EqualsAndHashCode(of = "id")
 public class Book {
 
     private Long id;
     private String title;
-    private Author author;
     private Integer pages;
-    private Double price;
-    private String description;
+    private Genre genre;
+    @Builder.Default
+    private List<Author> authors = new ArrayList<>();
 }
