@@ -9,7 +9,7 @@ public class Book {
 
     private Long id;
     private String title;
-    private String author;
+    private Author author;
     private Integer pages;
     private Double price;
     private String description;
