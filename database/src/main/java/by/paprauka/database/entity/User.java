@@ -3,10 +3,10 @@ package by.paprauka.database.entity;
 import by.paprauka.database.entity.enam.Gender;
 import by.paprauka.database.entity.enam.Role;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 
-@Getter
+@Data
 @Builder
 @EqualsAndHashCode(of = "id")
 public class User {

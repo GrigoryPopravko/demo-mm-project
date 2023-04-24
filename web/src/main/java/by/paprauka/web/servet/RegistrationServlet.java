@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -22,8 +23,8 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userService.save(
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Optional<User> saved = userService.save(
                 User.builder()
                         .email(req.getParameter("email"))
                         .password(req.getParameter("password"))

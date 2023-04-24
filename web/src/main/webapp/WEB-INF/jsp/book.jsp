@@ -13,10 +13,15 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
+<c:if test="${ param.error  == true}">
+    Книга не была создана
+</c:if>
 
+<c:if test="${ param.error  == false}">
 <h2>${book.title}</h2>
 <h3>Кол-во страниц: ${book.pages}</h3>
 <h4>Жанр: ${book.genre}</h4>
+</c:if>
 
 <%@ include file="footer.jsp" %>
 </body>
