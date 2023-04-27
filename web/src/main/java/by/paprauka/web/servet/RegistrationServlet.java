@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @WebServlet("/registration")
@@ -30,6 +31,7 @@ public class RegistrationServlet extends HttpServlet {
                         .password(req.getParameter("password"))
                         .name(req.getParameter("name"))
                         .surname(req.getParameter("surname"))
+                        .date(LocalDate.parse(req.getParameter("date")))
                         .build());
         resp.sendRedirect("/login");
     }

@@ -5,6 +5,7 @@ import by.paprauka.database.entity.User;
 import lombok.NoArgsConstructor;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public final class UserDao {
 
     private static final String SELECT_BY_EMAIL_PASS = "SELECT * FROM users WHERE email =? AND password = ?";
 
-    private static final String INSERT = "INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)";
+    private static final String INSERT = "INSERT INTO users (name, surname, email, password, date) VALUES (?,?,?,?,?)";
 
 
     public Optional<User> getByEmailAndPass(String email, String password) {
@@ -59,6 +60,7 @@ public final class UserDao {
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setDate(5, Date.valueOf(user.getDate().toString()));
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {

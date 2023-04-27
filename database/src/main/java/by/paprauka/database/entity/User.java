@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @EqualsAndHashCode(of = "id")
@@ -19,4 +21,5 @@ public class User {
     private Gender gender;
     private Role role;
     private Contact contact;
+    private LocalDate date;
 }
