@@ -1,7 +1,7 @@
 package by.paprauka.web.servet;
 
 import by.paprauka.database.dto.BookFilter;
-import by.paprauka.database.entity.Book;
+import by.paprauka.database.entity.BookEntity;
 import by.paprauka.database.entity.enam.Genre;
 import by.paprauka.service.BookService;
 import by.paprauka.web.util.PagesUtil;
@@ -40,7 +40,7 @@ public class BookServlet extends HttpServlet {
         String title = req.getParameter("title");
         String pages = req.getParameter("pages");
         String genre = req.getParameter("genre");
-        Book bookForCreation = Book.builder()
+        BookEntity bookForCreation = BookEntity.builder()
                 .title(title)
                 .pages(Integer.parseInt(pages))
                 .genre(Genre.valueOf(genre))
@@ -54,7 +54,7 @@ public class BookServlet extends HttpServlet {
     }
 
     @SneakyThrows
-    private static void redirectToBookPage(HttpServletRequest req, HttpServletResponse resp, Book book) {
+    private static void redirectToBookPage(HttpServletRequest req, HttpServletResponse resp, BookEntity book) {
         req.setAttribute("book", book);
         req.getRequestDispatcher(PagesUtil.BOOK).forward(req, resp);
     }

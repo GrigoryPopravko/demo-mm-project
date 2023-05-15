@@ -1,6 +1,6 @@
 package by.paprauka.web.servet;
 
-import by.paprauka.database.entity.User;
+import by.paprauka.database.entity.UserEntity;
 import by.paprauka.service.UserService;
 import by.paprauka.web.util.PagesUtil;
 import jakarta.servlet.ServletException;
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     @SneakyThrows
-    private static void successLogin(HttpServletRequest req, HttpServletResponse resp, User user) {
+    private static void successLogin(HttpServletRequest req, HttpServletResponse resp, UserEntity user) {
         req.getSession().setAttribute("user", user);
         resp.sendRedirect("/books");
     }

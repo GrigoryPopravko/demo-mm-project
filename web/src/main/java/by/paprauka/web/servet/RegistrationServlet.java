@@ -1,6 +1,6 @@
 package by.paprauka.web.servet;
 
-import by.paprauka.database.entity.User;
+import by.paprauka.database.entity.UserEntity;
 import by.paprauka.service.UserService;
 import by.paprauka.web.util.PagesUtil;
 import jakarta.servlet.ServletException;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @WebServlet("/registration")
@@ -25,13 +24,12 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Optional<User> saved = userService.save(
-                User.builder()
+        Optional<UserEntity> saved = userService.save(
+                UserEntity.builder()
                         .email(req.getParameter("email"))
                         .password(req.getParameter("password"))
                         .name(req.getParameter("name"))
                         .surname(req.getParameter("surname"))
-                        .date(LocalDate.parse(req.getParameter("date")))
                         .build());
         resp.sendRedirect("/login");
     }
