@@ -47,4 +47,14 @@ public class BookEntity implements BaseEntity<Long> {
     @Builder.Default
     @ManyToMany(mappedBy = "books")
     private List<AuthorEntity> authors = new ArrayList<>();
+
+    public void addAuthor(AuthorEntity author) {
+        this.getAuthors().add(author);
+        author.getBooks().add(this);
+    }
+
+    public void removeAuthor(AuthorEntity author) {
+        this.getAuthors().remove(author);
+        author.getBooks().remove(this);
+    }
 }

@@ -23,12 +23,17 @@ public class BookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         if (id == null) {
-            req.setAttribute("books", bookService.getFindByFilter(new BookFilter(
-                    Integer.parseInt(req.getParameter("pages") != null ? req.getParameter("pages") : "1000"),
-                    Genre.valueOf(req.getParameter("genre") != null ? req.getParameter("genre") : "CLASSIC"),
-                    Integer.parseInt(req.getParameter("limit") != null ? req.getParameter("limit") : "100"),
-                    Integer.parseInt(req.getParameter("page") != null ? req.getParameter("page") : "1")
-            )));
+            req.setAttribute("books", bookService.getFindByFilter(
+                            BookFilter.builder()
+                                    .title(req.getParameter("title"))
+                                    .pagesAmount(Integer.parseInt(req.getParameter("pages")))
+                                    .genre(Genre.valueOf(req.getParameter("genre")))
+                                    .authorName(req.getParameter("authorName"))
+                                    .limit(Integer.parseInt(req.getParameter("limit")))
+                                    .page(Integer.parseInt(req.getParameter("page")))
+                                    .build()
+                    )
+            );
             req.getRequestDispatcher(PagesUtil.BOOKS).forward(req, resp);
         } else {
             redirectToBookPage(req, resp, bookService.getById(Long.parseLong(id)));
