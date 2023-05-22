@@ -8,7 +8,6 @@ import by.paprauka.database.entity.BookEntity_;
 import by.paprauka.database.entity.enam.Genre;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
-import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
@@ -17,20 +16,13 @@ import org.hibernate.query.criteria.JpaRoot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static lombok.AccessLevel.PRIVATE;
-
-@NoArgsConstructor(access = PRIVATE)
-public final class BookDao {
+public final class BookDao extends Dao<Long, BookEntity> {
 
     private static final BookDao INSTANCE = new BookDao();
 
-    public List<BookEntity> findAll(Session session) {
-        JpaCriteriaQuery<BookEntity> query = session.getCriteriaBuilder().createQuery(BookEntity.class);
-        JpaRoot<BookEntity> bookRoot = query.from(BookEntity.class);
-        query.select(bookRoot);
-        return session.createQuery(query).list();
+    private BookDao() {
+        super(BookEntity.class);
     }
 
     public List<BookDto> findAllDtos(Session session) {
@@ -61,10 +53,6 @@ public final class BookDao {
         return session.createQuery(query).list();
     }
 
-    public Optional<BookEntity> findById(Session session, Long id) {
-        return Optional.ofNullable(session.get(BookEntity.class, id));
-    }
-
 
     public List<BookEntity> findByFilter(Session session, BookFilter filter) {
         HibernateCriteriaBuilder cb = session.getCriteriaBuilder();
@@ -78,25 +66,6 @@ public final class BookDao {
                 .setMaxResults(filter.getLimit())
                 .setFirstResult(filter.getOffset())
                 .list();
-    }
-
-    public Optional<BookEntity> create(Session session, BookEntity book) {
-        session.persist(book);
-        return Optional.ofNullable(book);
-    }
-
-    public Optional<BookEntity> update(Session session, BookEntity book) {
-        session.merge(book);
-        return Optional.ofNullable(book);
-    }
-
-    public boolean delete(Session session, Long id) {
-        BookEntity book = session.get(BookEntity.class, id);
-        if (book == null) {
-            return false;
-        }
-        session.remove(book);
-        return true;
     }
 
     private static List<Predicate> collectPredicates(BookFilter filter, HibernateCriteriaBuilder cb, JpaRoot<BookEntity> bookRoot, JpaJoin<Object, Object> authors) {
