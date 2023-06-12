@@ -1,45 +1,28 @@
 package by.paprauka.service;
 
-import by.paprauka.database.dao.UserDao;
 import by.paprauka.database.entity.UserEntity;
-import by.paprauka.database.hibernate.HibernateFactory;
-import lombok.NoArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import by.paprauka.database.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static lombok.AccessLevel.PRIVATE;
+@Service
+@RequiredArgsConstructor
+public class UserService {
 
-@NoArgsConstructor(access = PRIVATE)
-public final class UserService {
-
-    private static final UserService INSTANCE = new UserService();
-    private final HibernateFactory hibernateFactory = HibernateFactory.getInstance();
-    private final UserDao userDao = UserDao.getInstance();
+    private final UserRepository userRepository;
 
     public Optional<UserEntity> getBy(String email, String password) {
-        Optional<UserEntity> user;
-        try (Session session = hibernateFactory.getSession()) {
-            Transaction transaction = session.beginTransaction();
-            user = userDao.getByEmailAndPass(session, email, password);
-            transaction.commit();
-        }
-        return user;
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
-    public Optional<UserEntity> save(UserEntity user) {
-        Optional<UserEntity> newUser;
-        try (Session session = hibernateFactory.getSession()) {
-            Transaction transaction = session.beginTransaction();
-            newUser = userDao.create(session, user);
-            transaction.commit();
-        }
-        return newUser;
+    public Optional<UserEntity> findById(Long id) {
+        return userRepository.findById(id);
     }
 
 
-    public static UserService getInstance() {
-        return INSTANCE;
+    public UserEntity save(UserEntity user) {
+        return userRepository.save(user);
     }
 }

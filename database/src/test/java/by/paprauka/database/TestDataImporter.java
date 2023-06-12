@@ -16,8 +16,6 @@ public class TestDataImporter {
     public void importTestData(Session session) {
         AuthorEntity tolstoi = AuthorEntity.builder()
                 .fullName("Leo Tolstoi")
-                .birth(LocalDate.of(1828, 9, 9))
-                .origin("Russian")
                 .build();
 
         session.persist(tolstoi);

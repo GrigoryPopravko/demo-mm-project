@@ -8,14 +8,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @WebServlet("/registration")
+@RequiredArgsConstructor
 public class RegistrationServlet extends HttpServlet {
 
-    private UserService userService = UserService.getInstance();
+    private final UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,12 +25,10 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Optional<UserEntity> saved = userService.save(
+        UserEntity saved = userService.save(
                 UserEntity.builder()
                         .email(req.getParameter("email"))
                         .password(req.getParameter("password"))
-                        .name(req.getParameter("name"))
-                        .surname(req.getParameter("surname"))
                         .build());
         resp.sendRedirect("/login");
     }

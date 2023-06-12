@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS passport;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS book_author;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS author;
-DROP TABLE IF EXISTS book_author;
 
 CREATE TABLE users
 (
@@ -15,15 +15,17 @@ CREATE TABLE users
     street     VARCHAR(30)        NULL,
     building   VARCHAR(10)        NULL,
     flat       VARCHAR(10)        NULL,
-    created_at TIMESTAMP          NOT NULL DEFAULT CURRENT_TIMESTAMP
+    tel        VARCHAR(10)        NULL,
+    address    VARCHAR(50)        NULL,
+    created_at DATE               NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE orders
 (
     id         BIGSERIAL PRIMARY KEY,
-    user_id    BIGINT    NOT NULL REFERENCES users (id),
-    price      INT       NOT NULL,
-    created_at TIMESTAMP NOT NULL
+    user_id    BIGINT NOT NULL REFERENCES users (id),
+    price      INT    NOT NULL,
+    created_at DATE   NOT NULL
 );
 
 CREATE TABLE passport
@@ -36,9 +38,9 @@ CREATE TABLE book
 (
     id     BIGSERIAL PRIMARY KEY,
     title  VARCHAR(20) UNIQUE NOT NULL,
-    type   VARCHAR(7)         NOT NULL,
     format VARCHAR(3)         NULL,
-    pages  INT                NULL
+    pages  INT                NULL,
+    genre  VARCHAR(20)        NULL
 );
 
 CREATE TABLE author
@@ -53,5 +55,5 @@ CREATE TABLE book_author
     author_id BIGINT REFERENCES author (id)
 );
 
-INSERT INTO book(title, type, format, pages)
-VALUES ('DEVILS', 'CLASSIC', 'PRINTED', '200')
+INSERT INTO book(title, genre, format, pages)
+VALUES ('DEVILS', 'CLASSIC', 'MP3', '200')
