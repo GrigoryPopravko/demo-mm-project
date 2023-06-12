@@ -1,0 +1,11 @@
+DELETE
+FROM book_author
+WHERE TRUE;
+
+DELETE
+FROM book
+WHERE TRUE;
+
+DELETE
+FROM author
+WHERE TRUE;

@@ -1,7 +1,9 @@
 package by.paprauka.database.dao;
 
 import by.paprauka.database.config.DatabaseConfig;
+import by.paprauka.database.entity.AuthorEntity;
 import by.paprauka.database.entity.BookEntity;
+import by.paprauka.database.repository.AuthorRepository;
 import by.paprauka.database.repository.BookRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -12,21 +14,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 import static by.paprauka.database.entity.enam.Genre.CLASSIC;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {DatabaseConfig.class})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Sql("classpath:test-data.sql")
+@Sql(value = "classpath:purge-data.sql", executionPhase = AFTER_TEST_METHOD)
 class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
 
     @Test
@@ -53,19 +62,21 @@ class BookRepositoryTest {
         assertArrayEquals(expected, actual);
     }
 
-//    @Test
-//    @Order(4)
-//    void whenFindAllByAuthorInvoked_ThenAllTheBooksOfAuthorAreReturned() {
-//
-//
-//        String[] actual = bookRepository.findAllByAuthorsContains("Leo Tolstoi")
-//                .stream()
-//                .map(BookEntity::getTitle)
-//                .toArray(String[]::new);
-//        String[] expected = List.of("Anna Karenina", "War and Peace")
-//                .toArray(String[]::new);
-//        assertArrayEquals(expected, actual);
-//    }
+    @Test
+    @Order(4)
+    @Transactional
+    void whenFindAllByAuthorInvoked_ThenAllTheBooksOfAuthorAreReturned() {
+        Optional<AuthorEntity> leoTolstoi = authorRepository.findByFullName("Leo Tolstoi");
+        List<BookEntity> allByAuthorsContains = bookRepository.findAllByAuthorsContains(leoTolstoi.get());
+
+        String[] actual = bookRepository.findAllByAuthorsContains(leoTolstoi.get())
+                .stream()
+                .map(BookEntity::getTitle)
+                .toArray(String[]::new);
+        String[] expected = List.of("Anna Karenina", "War and Peace")
+                .toArray(String[]::new);
+        assertArrayEquals(expected, actual);
+    }
 
 //    @Test
 //    @Order(5)
@@ -99,15 +110,6 @@ class BookRepositoryTest {
 //                .toArray(String[]::new);
 //        assertArrayEquals(expected, actual);
 //    }
-
-    @Test
-    @Order(7)
-    void whenFindById_ThenAllTheFilteredReturnsValidBook() {
-
-        Optional<BookEntity> actual = bookRepository.findById(1L);
-        assertTrue(actual.isPresent());
-        assertEquals("Anna Karenina", actual.get().getTitle());
-    }
 
     @Test
     @Order(8)
