@@ -15,7 +15,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 
-@WebServlet("/books")
+
 public class BookServlet extends HttpServlet {
 
     @Override

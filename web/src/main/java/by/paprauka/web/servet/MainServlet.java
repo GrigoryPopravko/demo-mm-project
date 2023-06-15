@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@WebServlet("/")
+
 public class MainServlet extends HttpServlet {
 
     @Override

@@ -2,9 +2,10 @@ package by.paprauka.web.util;
 
 public final class PagesUtil {
 
-    private static final String PREFIX = "/WEB-INF/jsp/";
-    public static final String BOOKS = PREFIX + "books.jsp";
-    public static final String BOOK = PREFIX + "book.jsp";
-    public static final String LOGIN = PREFIX + "login.jsp";
-    public static final String REGISTRATION = PREFIX + "registration.jsp";
+    public static final String PREFIX = "/WEB-INF/view/";
+    public static final String SUFFIX = ".jsp";
+    public static final String BOOKS = "books";
+    public static final String BOOK = "book";
+    public static final String LOGIN = "login";
+    public static final String REGISTRATION = "registration";
 }
