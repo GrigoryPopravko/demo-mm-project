@@ -1,13 +1,16 @@
 package by.paprauka.service;
 
+import by.paprauka.database.dto.BookFilter;
 import by.paprauka.database.entity.BookEntity;
 import by.paprauka.database.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookService {
 
@@ -17,11 +20,9 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-//    public List<BookEntity> getFindByFilter(BookFilter filter) {
-//
-//            books = bookDao.findByFilter(session, filter);
-//        return books;
-//    }
+    public List<BookEntity> getFindByFilter(BookFilter filter) {
+        return bookRepository.findByFilter(filter);
+    }
 
     public BookEntity getById(Long id) {
         return bookRepository.findById(id)

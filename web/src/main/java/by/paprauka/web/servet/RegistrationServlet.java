@@ -8,15 +8,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 
 @WebServlet("/registration")
-@RequiredArgsConstructor
 public class RegistrationServlet extends HttpServlet {
-
-    private final UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +22,8 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ApplicationContext context = (ApplicationContext) getServletContext().getAttribute("applicationContext");
+        UserService userService = context.getBean(UserService.class);
         UserEntity saved = userService.save(
                 UserEntity.builder()
                         .email(req.getParameter("email"))
