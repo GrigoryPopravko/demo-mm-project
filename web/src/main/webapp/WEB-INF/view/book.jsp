@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>${book.title}</title>
+    <title>Книга</title>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -17,13 +17,34 @@
     Книга не была создана
 </c:if>
 
-<c:if test="${ param.error  == false}">
 <h2>${book.title}</h2>
 <h3>Кол-во страниц: ${book.pages}</h3>
 <h4>Жанр: ${book.genre}</h4>
-</c:if>
 
 <%@ include file="footer.jsp" %>
+<form action="${pageContext.request.contextPath}/book/${book.id}/delete" method="post">
+    <button>DELETE</button>
+</form>
+
+<form action="${pageContext.request.contextPath}/book/${book.id}/update" method="post">
+    <label for="titleId">Title:</label><br>
+    <input type="text" id="titleId" name="title" value="${book.title}"><br>
+
+    <label for="genreId">Genre:</label><br>
+    <input type="text" id="genreId" name="genre" value="${book.genre}"><br>
+
+    <label for="pagesId">Page Amount:</label><br>
+    <input type="number" id="pagesId" name="pages" value="${book.pages}"><br>
+
+    <label for="authorsIds">Author:</label>
+    <select id="authorsIds" name="authorsIds">
+        <c:forEach var="author" items="${book.authors}">
+            <option value="1">${book.authors}</option>
+        </c:forEach>
+    </select>
+
+    <input type="submit" value="UPDATE">
+</form>
 </body>
 </html>
 

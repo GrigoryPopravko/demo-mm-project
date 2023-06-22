@@ -14,13 +14,17 @@
 <body>
 <%@ include file="header.jsp" %>
 
-<h1>${sessionScope.user.name} хотим тебе предложить</h1>
+<c:if test="${ param.error  == true}">
+    Книга не была изменина
+</c:if>
+
+<h1>${sessionScope.user.email} хотим тебе предложить</h1>
 
 <c:forEach var="book" items="${requestScope.books}">
     <h2>${book.title}</h2>
     <h3>Кол-во страниц: ${book.pages}</h3>
     <h4>Жанр: ${book.genre}</h4>
-    <h5><a href=${pageContext.request.contextPath}/books?id=${book.id}>Подробнее</a></h5>
+    <h5><a href=${pageContext.request.contextPath}/book/${book.id}>Подробнее</a></h5>
 </c:forEach>
 
 <%@ include file="footer.jsp" %>

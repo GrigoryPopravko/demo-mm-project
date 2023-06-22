@@ -1,21 +1,8 @@
 package by.paprauka.database.entity;
 
 import by.paprauka.database.entity.enam.Genre;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +32,7 @@ public class BookEntity implements BaseEntity<Long> {
     private Genre genre;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.REMOVE)
     private List<AuthorEntity> authors = new ArrayList<>();
 
     public void addAuthor(AuthorEntity author) {

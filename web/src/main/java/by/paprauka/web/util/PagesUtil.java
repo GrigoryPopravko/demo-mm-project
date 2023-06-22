@@ -8,4 +8,5 @@ public final class PagesUtil {
     public static final String BOOK = "book";
     public static final String LOGIN = "login";
     public static final String REGISTRATION = "registration";
+    public static final String API = "api/";
 }

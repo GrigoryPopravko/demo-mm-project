@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class BookRepositoryExtensionImpl implements BookRepositoryExtension {
         CriteriaQuery<BookEntity> query = cb.createQuery(BookEntity.class);
         Root<BookEntity> bookRoot = query.from(BookEntity.class);
         query.select(bookRoot);
-        Join<Object, Object> authors = bookRoot.join(BookEntity_.AUTHORS);
+        Join<Object, Object> authors = bookRoot.join(BookEntity_.AUTHORS, JoinType.LEFT);
         query.where(collectPredicates(filter, cb, bookRoot, authors).toArray(Predicate[]::new));
         return entityManager.createQuery(query)
                 .setMaxResults(filter.getLimit())
@@ -45,10 +46,10 @@ public class BookRepositoryExtensionImpl implements BookRepositoryExtension {
         if (filter.getGenre() != null) {
             predicates.add(cb.equal(bookRoot.get(BookEntity_.GENRE), filter.getGenre()));
         }
-        if (filter.getTitle() != null) {
+        if (filter.getTitle() != null && !filter.getTitle().isBlank()) {
             predicates.add(cb.like(bookRoot.get(BookEntity_.TITLE), "%" + filter.getTitle() + "%"));
         }
-        if (filter.getAuthorName() != null) {
+        if (filter.getAuthorName() != null && !filter.getAuthorName().isBlank()) {
             predicates.add(cb.like(authors.get(AuthorEntity_.FULL_NAME), "%" + filter.getAuthorName() + "%"));
         }
         return predicates;
