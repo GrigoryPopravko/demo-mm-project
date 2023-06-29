@@ -41,11 +41,11 @@ public class BookService {
     public Long create(BookCreationDto book) {
         BookEntity newBook = BookEntity
                 .builder()
-                .title(book.title())
-                .genre(book.genre())
-                .pages(book.pages())
+                .title(book.getTitle())
+                .genre(book.getGenre())
+                .pages(book.getPages())
                 .build();
-        authorRepository.findAllByIdIn(book.authorsIds())
+        authorRepository.findAllByIdIn(book.getAuthorsIds())
                 .forEach(newBook::addAuthor);
         return bookRepository.save(newBook).getId();
     }
@@ -54,10 +54,10 @@ public class BookService {
         Optional<BookEntity> existedBook = bookRepository.findById(id);
         if (existedBook.isPresent()) {
             BookEntity book = existedBook.get();
-            book.setTitle(update.title());
-            book.setGenre(update.genre());
-            book.setPages(update.pages());
-            List<AuthorEntity> authors = authorRepository.findAllByIdIn(update.authorsIds());
+            book.setTitle(update.getTitle());
+            book.setGenre(update.getGenre());
+            book.setPages(update.getPages());
+            List<AuthorEntity> authors = authorRepository.findAllByIdIn(update.getAuthorsIds());
             book.setAuthors(authors);
             return Optional.of(toReadDto(bookRepository.save(book)));
         }

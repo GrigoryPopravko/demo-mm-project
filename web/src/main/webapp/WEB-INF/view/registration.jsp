@@ -27,7 +27,7 @@
     <label for="passwordId">Password:</label><br>
     <input type="password" id="passwordId" name="password"><br>
 
-    <label for="dateId">Password:</label><br>
+    <label for="dateId">Birthday:</label><br>
     <input type="date" id="dateId" name="date"><br>
 
     <label for="genderId">Gender?:</label><br>
