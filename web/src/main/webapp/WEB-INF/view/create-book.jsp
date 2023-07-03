@@ -18,8 +18,11 @@
     <label for="titleId">Title:</label><br>
     <input type="text" id="titleId" name="title"><br>
 
-    <label for="genreId">Genre:</label><br>
-    <input type="text" id="genreId" name="genre"><br>
+    <select id="genreId" name="genre">
+        <c:forEach var="genre" items="${requestScope.genres}">
+            <option value="${genre}">${genre}</option>
+        </c:forEach>
+    </select>
 
     <label for="pagesId">Page Amount:</label><br>
     <input type="number" id="pagesId" name="pages"><br>

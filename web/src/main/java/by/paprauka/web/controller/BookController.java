@@ -36,7 +36,6 @@ public class BookController {
 
     @GetMapping(path = "/{id}")
     public String getBookPage(Model model, @PathVariable Long id) {
-
         return bookService.getById(id).
                 map(book -> {
                     model.addAttribute("book", book);
@@ -49,6 +48,7 @@ public class BookController {
     @GetMapping(path = "/create")
     public String createBookPage(Model model, Principal principal) {
         String username = principal.getName();
+        model.addAttribute("genres", bookService.getAllGenres());
         model.addAttribute("authors", bookService.getAllAuthors());
         return "create-book";
     }

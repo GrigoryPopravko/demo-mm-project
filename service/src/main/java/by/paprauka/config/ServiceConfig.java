@@ -10,7 +10,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Import(DatabaseConfig.class)
+@Import({DatabaseConfig.class, CacheConfig.class})
 @ComponentScan("by.paprauka.service")
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)

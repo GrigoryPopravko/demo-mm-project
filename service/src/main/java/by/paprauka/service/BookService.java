@@ -5,9 +5,15 @@ import by.paprauka.database.dto.BookFilter;
 import by.paprauka.database.dto.BookReadDto;
 import by.paprauka.database.entity.AuthorEntity;
 import by.paprauka.database.entity.BookEntity;
+import by.paprauka.database.entity.enam.Genre;
 import by.paprauka.database.repository.AuthorRepository;
 import by.paprauka.database.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +35,12 @@ public class BookService {
                 .toList();
     }
 
+    @Cacheable(value = "books", unless = "#result.size() > 100")
     public List<BookEntity> getFindByFilter(BookFilter filter) {
         return bookRepository.findByFilter(filter);
     }
 
+    @Cacheable("book")
     public Optional<BookReadDto> getById(Long id) {
         return bookRepository.findById(id)
                 .map(this::toReadDto);
@@ -50,6 +58,7 @@ public class BookService {
         return bookRepository.save(newBook).getId();
     }
 
+    @CachePut(value = "book", key = "#id")
     public Optional<BookReadDto> update(Long id, BookCreationDto update) {
         Optional<BookEntity> existedBook = bookRepository.findById(id);
         if (existedBook.isPresent()) {
@@ -64,6 +73,10 @@ public class BookService {
         return Optional.empty();
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "book", key = "#id"),
+            @CacheEvict(value = "books", allEntries = true)
+    })
     public void delete(Long id) {
         bookRepository.findById(id)
                 .ifPresent(bookRepository::delete);
@@ -71,6 +84,10 @@ public class BookService {
 
     public List<AuthorEntity> getAllAuthors() {
         return authorRepository.findAll();
+    }
+
+    public List<Genre> getAllGenres() {
+        return List.of(Genre.values());
     }
 
     private BookReadDto toReadDto(BookEntity book) {
